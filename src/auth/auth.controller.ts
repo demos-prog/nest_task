@@ -1,4 +1,12 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Prisma } from '@prisma/client';
 import { Public } from './decorator.factory';
@@ -19,5 +27,13 @@ export class AuthController {
   async loginUser(@Body() loginData: { email: string; password: string }) {
     const { email, password } = loginData;
     return this.authService.loginUser(email, password);
+  }
+
+  @Public()
+  @Get(':access_token')
+  async verifyAccessToken(
+    @Param('access_token') access_token: string,
+  ): Promise<boolean> {
+    return this.authService.verifyAccessToken(access_token);
   }
 }

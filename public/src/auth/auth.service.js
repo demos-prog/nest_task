@@ -46,6 +46,15 @@ let AuthService = class AuthService {
         }
         throw new common_1.UnauthorizedException();
     }
+    async verifyAccessToken(token) {
+        try {
+            await this.jwtService.verifyAsync(token);
+            return true;
+        }
+        catch (error) {
+            return false;
+        }
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

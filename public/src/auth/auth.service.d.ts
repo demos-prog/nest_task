@@ -9,4 +9,5 @@ export declare class AuthService {
     loginUser(email: string, password: string): Promise<{
         access_token: string;
     }>;
+    verifyAccessToken(token: string): Promise<boolean>;
 }

@@ -28,6 +28,9 @@ let AuthController = class AuthController {
         const { email, password } = loginData;
         return this.authService.loginUser(email, password);
     }
+    async verifyAccessToken(access_token) {
+        return this.authService.verifyAccessToken(access_token);
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -47,6 +50,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "loginUser", null);
+__decorate([
+    (0, decorator_factory_1.Public)(),
+    (0, common_1.Get)(':access_token'),
+    __param(0, (0, common_1.Param)('access_token')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "verifyAccessToken", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

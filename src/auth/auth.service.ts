@@ -45,4 +45,13 @@ export class AuthService {
 
     throw new UnauthorizedException();
   }
+
+  async verifyAccessToken(token: string): Promise<boolean> {
+    try {
+      await this.jwtService.verifyAsync(token);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }

@@ -17,4 +17,5 @@ export declare class AuthController {
     }): Promise<{
         access_token: string;
     }>;
+    verifyAccessToken(access_token: string): Promise<boolean>;
 }

@@ -11,12 +11,21 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const users_controller_1 = require("./users.controller");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const core_1 = require("@nestjs/core");
+const roles_guard_1 = require("./roles.guard");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
 exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
-        providers: [users_service_1.UsersService, prisma_service_1.PrismaService],
+        providers: [
+            users_service_1.UsersService,
+            prisma_service_1.PrismaService,
+            {
+                provide: core_1.APP_GUARD,
+                useClass: roles_guard_1.RolesGuard,
+            },
+        ],
         controllers: [users_controller_1.UserController],
     })
 ], UserModule);

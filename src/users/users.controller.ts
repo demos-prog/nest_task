@@ -1,10 +1,20 @@
-import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Prisma, User } from '@prisma/client';
-import { Role } from 'src/auth/role.enum';
-import { Roles } from 'src/auth/roles.decorator';
+import { Role } from 'src/users/role.enum';
+import { Roles } from 'src/users/roles.decorator';
+import { RolesGuard } from './roles.guard';
 
 @Controller('users')
+@UseGuards(RolesGuard)
 export class UserController {
   constructor(private readonly userService: UsersService) {}
 
@@ -47,7 +57,7 @@ export class UserController {
     return updatedUser;
   }
 
-  @Roles(Role.Admin)
+  @Roles(Role.User)
   @Delete(':id')
   async deleteUser(@Param('id') id: string) {
     const userId = parseInt(id);

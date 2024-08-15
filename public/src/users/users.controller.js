@@ -16,8 +16,9 @@ exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const client_1 = require("@prisma/client");
-const role_enum_1 = require("../auth/role.enum");
-const roles_decorator_1 = require("../auth/roles.decorator");
+const role_enum_1 = require("./role.enum");
+const roles_decorator_1 = require("./roles.decorator");
+const roles_guard_1 = require("./roles.guard");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -88,7 +89,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateUser", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Admin),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.User),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -97,6 +98,7 @@ __decorate([
 ], UserController.prototype, "deleteUser", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UserController);
 //# sourceMappingURL=users.controller.js.map

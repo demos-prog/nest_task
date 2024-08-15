@@ -24,7 +24,6 @@ export class UserController {
     return this.userService.getAllUsers();
   }
 
-  @Roles(Role.Admin, Role.User)
   @Get(':id')
   async getUserById(@Param('id') id: string): Promise<User | null> {
     const userId = parseInt(id);
@@ -34,13 +33,11 @@ export class UserController {
     return this.userService.getUserById(userId);
   }
 
-  @Roles(Role.Admin, Role.User)
   @Get('userEmail/:email')
   async getUserByEmail(@Param('email') email: string): Promise<User | null> {
     return this.userService.getUserByEmail(email);
   }
 
-  @Roles(Role.Admin, Role.User)
   @Put(':id')
   async updateUser(
     @Param('id') id: string,
@@ -57,7 +54,7 @@ export class UserController {
     return updatedUser;
   }
 
-  @Roles(Role.User)
+  @Roles(Role.Admin)
   @Delete(':id')
   async deleteUser(@Param('id') id: string) {
     const userId = parseInt(id);

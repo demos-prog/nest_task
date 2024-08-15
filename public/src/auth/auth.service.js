@@ -35,7 +35,7 @@ let AuthService = class AuthService {
             },
         });
         if (!user) {
-            return null;
+            throw new common_1.UnauthorizedException();
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (isPasswordValid) {

@@ -18,7 +18,6 @@ const users_service_1 = require("./users.service");
 const client_1 = require("@prisma/client");
 const role_enum_1 = require("../auth/role.enum");
 const roles_decorator_1 = require("../auth/roles.decorator");
-const decorator_factory_1 = require("../auth/decorator.factory");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -32,6 +31,9 @@ let UserController = class UserController {
             return null;
         }
         return this.userService.getUserById(userId);
+    }
+    async getUserByEmail(email) {
+        return this.userService.getUserByEmail(email);
     }
     async updateUser(id, data) {
         const userId = parseInt(id);
@@ -54,7 +56,6 @@ let UserController = class UserController {
 };
 exports.UserController = UserController;
 __decorate([
-    (0, decorator_factory_1.Public)(),
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Admin),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -71,6 +72,14 @@ __decorate([
 ], UserController.prototype, "getUserById", null);
 __decorate([
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Admin, role_enum_1.Role.User),
+    (0, common_1.Get)('userEmail/:email'),
+    __param(0, (0, common_1.Param)('email')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getUserByEmail", null);
+__decorate([
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Admin, role_enum_1.Role.User),
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -79,7 +88,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateUser", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Admin, role_enum_1.Role.User),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Admin),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

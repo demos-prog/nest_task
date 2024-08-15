@@ -3,13 +3,11 @@ import { UsersService } from './users.service';
 import { Prisma, User } from '@prisma/client';
 import { Role } from 'src/auth/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
-import { Public } from 'src/auth/decorator.factory';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UsersService) {}
 
-  @Public()
   @Roles(Role.Admin)
   @Get()
   async getAllUsers(): Promise<User[]> {
@@ -24,6 +22,12 @@ export class UserController {
       return null;
     }
     return this.userService.getUserById(userId);
+  }
+
+  @Roles(Role.Admin, Role.User)
+  @Get('userEmail/:email')
+  async getUserByEmail(@Param('email') email: string): Promise<User | null> {
+    return this.userService.getUserByEmail(email);
   }
 
   @Roles(Role.Admin, Role.User)
@@ -43,7 +47,7 @@ export class UserController {
     return updatedUser;
   }
 
-  @Roles(Role.Admin, Role.User)
+  @Roles(Role.Admin)
   @Delete(':id')
   async deleteUser(@Param('id') id: string) {
     const userId = parseInt(id);

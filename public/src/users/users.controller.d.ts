@@ -5,6 +5,7 @@ export declare class UserController {
     constructor(userService: UsersService);
     getAllUsers(): Promise<User[]>;
     getUserById(id: string): Promise<User | null>;
+    getUserByEmail(email: string): Promise<User | null>;
     updateUser(id: string, data: Prisma.UserUpdateInput): Promise<User | null>;
     deleteUser(id: string): Promise<{
         id: number;

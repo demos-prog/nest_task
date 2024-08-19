@@ -71,7 +71,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUserById", null);
 __decorate([
-    (0, common_1.Get)('userEmail/:email'),
+    (0, common_1.Get)('email/:email'),
     __param(0, (0, common_1.Param)('email')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

@@ -13,8 +13,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostController = void 0;
-const common_1 = require("@nestjs/common");
 const posts_service_1 = require("./posts.service");
+const roles_guard_1 = require("../users/roles.guard");
+const role_enum_1 = require("../users/role.enum");
+const roles_decorator_1 = require("../users/roles.decorator");
+const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
 let PostController = class PostController {
     constructor(postService) {
@@ -41,6 +44,7 @@ let PostController = class PostController {
 };
 exports.PostController = PostController;
 __decorate([
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.User),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -77,6 +81,7 @@ __decorate([
 ], PostController.prototype, "deletePostById", null);
 exports.PostController = PostController = __decorate([
     (0, common_1.Controller)('posts'),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [posts_service_1.PostsService])
 ], PostController);
 //# sourceMappingURL=posts.controller.js.map

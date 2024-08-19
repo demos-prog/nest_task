@@ -1,19 +1,25 @@
+import { PostsService } from './posts.service';
+import { RolesGuard } from '../users/roles.guard';
+import { Role } from 'src/users/role.enum';
+import { Roles } from 'src/users/roles.decorator';
 import {
-  Body,
   Controller,
+  UseGuards,
   Post,
+  Body,
   Get,
   Param,
   Put,
   Delete,
 } from '@nestjs/common';
-import { PostsService } from './posts.service';
 import { Prisma } from '@prisma/client';
 
 @Controller('posts')
+@UseGuards(RolesGuard)
 export class PostController {
   constructor(private readonly postService: PostsService) {}
 
+  @Roles(Role.User)
   @Post()
   async createPost(@Body() post: Prisma.PostCreateInput) {
     return this.postService.createPost(post);

@@ -35,6 +35,7 @@ export class PostController {
     return this.postService.getPostById(parseInt(id));
   }
 
+  @Roles(Role.User)
   @Put(':id')
   async updatePost(
     @Param('id') id: string,
@@ -46,6 +47,7 @@ export class PostController {
     });
   }
 
+  @Roles(Role.User)
   @Delete(':id')
   async deletePostById(@Param('id') id: string) {
     return this.postService.deletePostById(parseInt(id));

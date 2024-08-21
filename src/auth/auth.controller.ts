@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Prisma } from '@prisma/client';
-import { Public } from '../decorators/public.factory';
+import { Public } from '../decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {

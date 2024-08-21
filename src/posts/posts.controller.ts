@@ -1,5 +1,4 @@
 import { PostsService } from './posts.service';
-import { RolesGuard } from '../users/roles.guard';
 import { Role } from 'src/users/role.enum';
 import { Roles } from 'src/users/roles.decorator';
 import {
@@ -13,6 +12,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { RolesGuard } from 'src/guards/roles.guard';
 
 @Controller('posts')
 @UseGuards(RolesGuard)
@@ -21,27 +21,24 @@ export class PostController {
 
   @Roles(Role.User)
   @Post()
-  async createPost(@Body() post: Prisma.PostCreateInput) {
-    return this.postService.createPost(post);
+  async create(@Body() post: Prisma.PostCreateInput) {
+    return this.postService.create(post);
   }
 
   @Get()
-  async getAllPosts() {
-    return this.postService.getAllPosts();
+  async getAll() {
+    return this.postService.getAll();
   }
 
   @Get(':id')
-  async getPostById(@Param('id') id: string) {
-    return this.postService.getPostById(parseInt(id));
+  async getById(@Param('id') id: string) {
+    return this.postService.getById(parseInt(id));
   }
 
   @Roles(Role.User)
   @Put(':id')
-  async updatePost(
-    @Param('id') id: string,
-    @Body() post: Prisma.PostCreateInput,
-  ) {
-    return this.postService.updatePost({
+  async update(@Param('id') id: string, @Body() post: Prisma.PostCreateInput) {
+    return this.postService.update({
       where: { id: parseInt(id) },
       data: post,
     });
@@ -50,6 +47,6 @@ export class PostController {
   @Roles(Role.User)
   @Delete(':id')
   async deletePostById(@Param('id') id: string) {
-    return this.postService.deletePostById(parseInt(id));
+    return this.postService.deleteById(parseInt(id));
   }
 }

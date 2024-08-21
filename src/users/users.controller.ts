@@ -11,7 +11,7 @@ import { UsersService } from './users.service';
 import { Prisma, User } from '@prisma/client';
 import { Role } from 'src/users/role.enum';
 import { Roles } from 'src/users/roles.decorator';
-import { RolesGuard } from './roles.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
 
 @Controller('users')
 @UseGuards(RolesGuard)
@@ -20,26 +20,26 @@ export class UserController {
 
   @Roles(Role.Admin)
   @Get()
-  async getAllUsers(): Promise<User[]> {
-    return this.userService.getAllUsers();
+  async getAll(): Promise<User[]> {
+    return this.userService.getAll();
   }
 
   @Get(':id')
-  async getUserById(@Param('id') id: string): Promise<User | null> {
+  async getById(@Param('id') id: string): Promise<User | null> {
     const userId = parseInt(id);
     if (isNaN(userId)) {
       return null;
     }
-    return this.userService.getUserById(userId);
+    return this.userService.getById(userId);
   }
 
   @Get('email/:email')
-  async getUserByEmail(@Param('email') email: string): Promise<User | null> {
-    return this.userService.getUserByEmail(email);
+  async getByEmail(@Param('email') email: string): Promise<User | null> {
+    return this.userService.getByEmail(email);
   }
 
   @Put(':id')
-  async updateUser(
+  async update(
     @Param('id') id: string,
     @Body() data: Prisma.UserUpdateInput,
   ): Promise<User | null> {
@@ -47,7 +47,7 @@ export class UserController {
     if (isNaN(userId)) {
       return null;
     }
-    const updatedUser = await this.userService.updateUser({
+    const updatedUser = await this.userService.update({
       where: { id: userId },
       data: data,
     });
@@ -56,11 +56,11 @@ export class UserController {
 
   @Roles(Role.Admin)
   @Delete(':id')
-  async deleteUser(@Param('id') id: string) {
+  async delete(@Param('id') id: string) {
     const userId = parseInt(id);
     if (isNaN(userId)) {
       return null;
     }
-    return this.userService.deleteUser({ id: userId });
+    return this.userService.delete({ id: userId });
   }
 }

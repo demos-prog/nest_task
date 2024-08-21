@@ -1,32 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { Post, Prisma } from '@prisma/client';
-import { PrismaService } from 'prisma/prisma.service';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class PostsService {
   constructor(private prisma: PrismaService) {}
 
-  async createPost(data: Prisma.PostCreateInput): Promise<Post> {
+  async create(data: Prisma.PostCreateInput): Promise<Post> {
     return this.prisma.post.create({ data });
   }
 
-  async getAllPosts(): Promise<Post[]> {
+  async getAll(): Promise<Post[]> {
     return this.prisma.post.findMany();
   }
 
-  async getPostById(id: number): Promise<Post> {
+  async getById(id: number): Promise<Post> {
     return this.prisma.post.findUnique({
       where: { id },
     });
   }
 
-  async getPostsByUserId(userId: number): Promise<Post[]> {
+  async getByUserId(userId: number): Promise<Post[]> {
     return this.prisma.post.findMany({
       where: { userId },
     });
   }
 
-  async updatePost(params: {
+  async update(params: {
     where: Prisma.PostWhereUniqueInput;
     data: Prisma.PostUpdateInput;
   }): Promise<Post> {
@@ -37,7 +37,7 @@ export class PostsService {
     });
   }
 
-  async deletePostById(id: number): Promise<Post> {
+  async deleteById(id: number): Promise<Post> {
     return this.prisma.post.delete({
       where: { id: id },
     });

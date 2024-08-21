@@ -9,9 +9,9 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Prisma, User } from '@prisma/client';
-import { Role } from 'src/users/role.enum';
-import { Roles } from 'src/users/roles.decorator';
 import { RolesGuard } from 'src/guards/roles.guard';
+import { Roles } from 'src/decorators/roles.decorator';
+import { Role } from 'src/constants';
 
 @Controller('users')
 @UseGuards(RolesGuard)

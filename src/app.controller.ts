@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { Public } from './auth/decorator.factory';
+import { Public } from './decorators/public.factory';
 
 @Controller()
 export class AppController {

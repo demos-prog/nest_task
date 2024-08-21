@@ -1,6 +1,4 @@
 import { PostsService } from './posts.service';
-import { Role } from 'src/users/role.enum';
-import { Roles } from 'src/users/roles.decorator';
 import {
   Controller,
   UseGuards,
@@ -13,6 +11,8 @@ import {
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { RolesGuard } from 'src/guards/roles.guard';
+import { Roles } from 'src/decorators/roles.decorator';
+import { Role } from 'src/constants';
 
 @Controller('posts')
 @UseGuards(RolesGuard)

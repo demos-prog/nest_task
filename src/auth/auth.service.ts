@@ -11,7 +11,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+  async auth(data: Prisma.UserCreateInput): Promise<User> {
     const hashedPassword = await bcrypt.hash(data.password, 10);
     return this.prisma.user.create({
       data: {
@@ -21,7 +21,7 @@ export class AuthService {
     });
   }
 
-  async loginUser(
+  async login(
     email: string,
     password: string,
   ): Promise<{ access_token: string }> {

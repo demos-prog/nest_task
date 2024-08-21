@@ -17,16 +17,16 @@ export class AuthController {
 
   @Public()
   @Post('register')
-  async createUser(@Body() userData: Prisma.UserCreateInput) {
-    return this.authService.createUser(userData);
+  async auth(@Body() userData: Prisma.UserCreateInput) {
+    return this.authService.auth(userData);
   }
 
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  async loginUser(@Body() loginData: { email: string; password: string }) {
+  async login(@Body() loginData: { email: string; password: string }) {
     const { email, password } = loginData;
-    return this.authService.loginUser(email, password);
+    return this.authService.login(email, password);
   }
 
   @Public()

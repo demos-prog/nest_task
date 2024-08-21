@@ -46,7 +46,7 @@ export class PostController {
 
   @Roles(Role.User)
   @Delete(':id')
-  async deletePostById(@Param('id') id: string) {
+  async deleteById(@Param('id') id: string) {
     return this.postService.deleteById(parseInt(id));
   }
 }

@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { PrismaService } from 'src/prisma.service';
 import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './constants';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from '../guards/auth.guard';
 
@@ -10,6 +11,7 @@ import { AuthGuard } from '../guards/auth.guard';
   imports: [
     JwtModule.register({
       global: true,
+      secret: jwtConstants.secret,
       signOptions: { expiresIn: '1d' },
     }),
   ],

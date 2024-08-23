@@ -8,8 +8,9 @@ import {
   Post,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Prisma } from '@prisma/client';
 import { Public } from '../decorators/public.decorator';
+import { CreateUserDto } from 'src/dto/CreateUserDto';
+import { LoginUserDto } from 'src/dto/LoginUserDto';
 
 @Controller('auth')
 export class AuthController {
@@ -17,16 +18,15 @@ export class AuthController {
 
   @Public()
   @Post('register')
-  async auth(@Body() userData: Prisma.UserCreateInput) {
+  async auth(@Body() userData: CreateUserDto) {
     return this.authService.auth(userData);
   }
 
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  async login(@Body() loginData: { email: string; password: string }) {
-    const { email, password } = loginData;
-    return this.authService.login(email, password);
+  async login(@Body() loginData: LoginUserDto) {
+    return this.authService.login(loginData);
   }
 
   @Public()

@@ -3,6 +3,7 @@ import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { LoginUserDto } from 'src/dto/LoginUserDto';
 
 @Injectable()
 export class AuthService {
@@ -21,13 +22,10 @@ export class AuthService {
     });
   }
 
-  async login(
-    email: string,
-    password: string,
-  ): Promise<{ access_token: string }> {
+  async login(loginData: LoginUserDto): Promise<{ access_token: string }> {
     const user = await this.prisma.user.findUnique({
       where: {
-        email,
+        email: loginData.email,
       },
     });
 
@@ -35,7 +33,10 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(
+      loginData.password,
+      user.password,
+    );
     if (isPasswordValid) {
       const payload = { sub: user.id, useremail: user.email };
       return {

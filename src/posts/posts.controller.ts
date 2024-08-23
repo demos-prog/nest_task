@@ -13,6 +13,7 @@ import { Prisma } from '@prisma/client';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/constants';
+import { PostCreateDto } from 'src/dto/PostCreateDto';
 
 @Controller('posts')
 @UseGuards(RolesGuard)
@@ -21,8 +22,12 @@ export class PostController {
 
   @Roles(Role.User)
   @Post()
-  async create(@Body() post: Prisma.PostCreateInput) {
-    return this.postService.create(post);
+  async create(@Body() post: PostCreateDto) {
+    const postInput: Prisma.PostCreateInput = {
+      ...post,
+      user: { connect: { id: post.user } },
+    };
+    return this.postService.create(postInput);
   }
 
   @Get()
@@ -37,10 +42,14 @@ export class PostController {
 
   @Roles(Role.User)
   @Put(':id')
-  async update(@Param('id') id: string, @Body() post: Prisma.PostCreateInput) {
+  async update(@Param('id') id: string, @Body() post: PostCreateDto) {
+    const postUpdateInput: Prisma.PostUpdateInput = {
+      ...post,
+      user: { connect: { id: post.user } },
+    };
     return this.postService.update({
       where: { id: parseInt(id) },
-      data: post,
+      data: postUpdateInput,
     });
   }
 

@@ -8,12 +8,14 @@ import {
   Param,
   Put,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/constants';
 import { PostCreateDto } from 'src/dto/PostCreateDto';
+import { GetPostsFilterDto } from 'src/dto/GetPostsFilterDto';
 
 @Controller('posts')
 @UseGuards(RolesGuard)
@@ -31,8 +33,8 @@ export class PostController {
   }
 
   @Get()
-  async getAll() {
-    return this.postService.getAll();
+  async getAll(@Query() qParams: GetPostsFilterDto) {
+    return this.postService.getAll(qParams);
   }
 
   @Get(':id')

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Post, Prisma } from '@prisma/client';
+import { GetPostsFilterDto } from 'src/dto/GetPostsFilterDto';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -10,8 +11,19 @@ export class PostsService {
     return this.prisma.post.create({ data });
   }
 
-  async getAll(): Promise<Post[]> {
-    return this.prisma.post.findMany();
+  async getAll(_queryParams: GetPostsFilterDto): Promise<Post[]> {
+    const params: Prisma.PostFindManyArgs = {};
+    if (_queryParams.userId) {
+      params.where = { userId: +_queryParams.userId };
+    }
+    if (_queryParams.title) {
+      params.where = { title: { contains: _queryParams.title } };
+    }
+    if (_queryParams.skip) params.skip = +_queryParams.skip;
+
+    if (_queryParams.take) params.take = +_queryParams.take;
+
+    return this.prisma.post.findMany(params);
   }
 
   async getById(id: number): Promise<Post> {

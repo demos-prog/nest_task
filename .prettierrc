@@ -3,5 +3,5 @@
   "semi": true,
   "singleQuote": true,
   "constructor": "none",
-  "spaceBeforeFunctionParen": false
+  "spaceBeforeFunctionParen": true
 }

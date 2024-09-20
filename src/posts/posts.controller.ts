@@ -11,11 +11,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { RolesGuard } from 'src/guards/roles.guard';
-import { Roles } from 'src/decorators/roles.decorator';
-import { Role } from 'src/constants';
-import { PostCreateDto } from 'src/dto/PostCreateDto';
-import { GetPostsFilterDto } from 'src/dto/GetPostsFilterDto';
+import { RolesGuard } from '../guards/roles.guard';
+import { Roles } from '../decorators/roles.decorator';
+import { Role } from '../constants';
+import { PostCreateDto } from '../dto/PostCreateDto';
+import { GetPostsFilterDto } from '../dto/GetPostsFilterDto';
 
 @Controller('posts')
 @UseGuards(RolesGuard)
